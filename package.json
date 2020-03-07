@@ -1,0 +1,35 @@
+{
+  "name": "pcnf-converter",
+  "version": "1.0.0",
+  "description": "Browser based PCNF converter",
+  "author": "Alexander Teslovskiy",
+  "license": "MIT",
+  "keywords": [
+    "antlr",
+    "node"
+  ],
+  "homepage": "https://github.com/ARtoriouSs/pcnf-converter#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ARtoriouSs/pcnf-converter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ARtoriouSs/pcnf-converter/issues"
+  },
+  "main": "src/index.js",
+  "dependencies": {
+    "antlr4": "^4.8.0",
+    "express": "^4.17.1",
+    "pug": "^2.0.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  },
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "test": "echo \"No tests found\"",
+
+    "debug": "node inspect src/index.js",
+    "grammar": "java -Xmx500M -cp \"/usr/local/lib/antlr-4.7.1-complete.jar:$CLASSPATH\" org.antlr.v4.Tool -Dlanguage=JavaScript src/grammar/Logic.g4"
+  }
+}
