@@ -18,7 +18,5 @@ module.exports = (input) => {
   var statement = visitor.visitStatement(tree);
   pcnf = convert(statement);
 
-  debugger
-
   return pcnf;
 };

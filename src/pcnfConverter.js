@@ -37,6 +37,8 @@ function apply(statement, map) {
     let result = applyFormula(statement.formula, iterationMap);
     map.get('result').push(result)
   }
+
+  return map;
 }
 
 function applyFormula(formula, values) {
@@ -84,8 +86,27 @@ function implication(left, right) {
 }
 
 function buildPcnf(table) {
-  let result = table.get('result');
-  for (let i = 0; i < result.length)
+  let pcnf = '';
+  let results = table.get('result');
+  for (let i = 0; i < results.length; i++) {
+    if (results[i] === 0) {
+      pcnf += '(';
+      table.forEach((values, key) => {
+        if (key !== 'result') {
+          if (values[i] === 1) {
+            pcnf += `!${key} & `;
+          } else {
+            pcnf += `${key} & `;
+          }
+        }
+      });
+      pcnf = pcnf.slice(0, -3)
+      pcnf += ') | ';
+    }
+  }
+  pcnf = pcnf.slice(0, -3)
+
+  return pcnf;
 }
 
 exports.convert = convert;

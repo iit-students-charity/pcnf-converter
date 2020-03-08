@@ -18,7 +18,7 @@ app.post('/request', (req, res) => {
   res.redirect(url.format({
     pathname: '/result',
     query: {
-      'result': result.output
+      'result': result
     }
   }));
 });
