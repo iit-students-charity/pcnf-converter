@@ -2,6 +2,7 @@ const antlr4 = require('antlr4/index');
 
 const LogicLexer = require('./grammar/LogicLexer');
 const LogicParser = require('./grammar/LogicParser');
+const convert = require('./pcnfConverter').convert;
 var Visitor = require('./Visitor').Visitor;
 
 module.exports = (input) => {
@@ -15,10 +16,10 @@ module.exports = (input) => {
   var tree = parser.statement();
 
   var statement = visitor.visitStatement(tree);
-  var atoms = getAtoms(statement);
 
+  pcnf = convert(statement);
 
   debugger
 
-  return statementTree;
+  return pcnf;
 };
