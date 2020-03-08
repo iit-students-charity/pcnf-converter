@@ -1,6 +1,6 @@
 function convert(statement) {
   let map = getInitialMap(statement.atoms);
-  traverse(statement, map);
+  return buildPcnf(apply(statement, map));
 };
 
 function getInitialMap(atoms) {
@@ -25,7 +25,7 @@ function getInitialMap(atoms) {
   return map;
 };
 
-function traverse(statement, map) {
+function apply(statement, map) {
   for (let i = 0; i < Math.pow(2, statement.atoms.length); i++) {
     iterationMap = new Map();
     map.forEach((values, key) => {
@@ -34,13 +34,12 @@ function traverse(statement, map) {
       }
     })
 
-    res = applyFormula(statement.formula, iterationMap);
-      debugger;
+    let result = applyFormula(statement.formula, iterationMap);
+    map.get('result').push(result)
   }
 }
 
 function applyFormula(formula, values) {
-  debugger
   switch(formula.type) {
   case 'binary':
     return applyBinary(formula, values);
@@ -54,7 +53,7 @@ function applyFormula(formula, values) {
 }
 
 function applyUnary(formula, values) {
-  return !applyFormula(formula.target, values);
+  return !applyFormula(formula.target, values) ? 1 : 0;
 }
 
 function applyBinary(formula, values) {
@@ -67,7 +66,7 @@ function applyBinary(formula, values) {
   case 'conjunction':
     return left && right;
   case 'equivalent':
-    return left == right;
+    return left === right ? 1 : 0;
   case 'implication':
     return implication(left, right);
   }
@@ -75,13 +74,18 @@ function applyBinary(formula, values) {
 
 
 function implication(left, right) {
-  if (right == 1) {
+  if (right === 1) {
     return 1;
-  } else if (left == 0) {
+  } else if (left === 0) {
     return 1;
   } else {
     return 0;
   }
+}
+
+function buildPcnf(table) {
+  let result = table.get('result');
+  for (let i = 0; i < result.length)
 }
 
 exports.convert = convert;
