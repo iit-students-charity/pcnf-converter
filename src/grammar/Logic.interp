@@ -1,7 +1,7 @@
 token literal names:
 null
-'[10]'
-'[A-Z]'
+null
+null
 '!'
 '&'
 '|'
@@ -26,9 +26,9 @@ WS
 
 rule names:
 statement
-binary
-unary_formula
-binary_formula
+binaryOperation
+unaryFormula
+binaryFormula
 formula
 
 

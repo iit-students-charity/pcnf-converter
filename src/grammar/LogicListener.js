@@ -20,30 +20,30 @@ LogicListener.prototype.exitStatement = function(ctx) {
 };
 
 
-// Enter a parse tree produced by LogicParser#binary.
-LogicListener.prototype.enterBinary = function(ctx) {
+// Enter a parse tree produced by LogicParser#binaryOperation.
+LogicListener.prototype.enterBinaryOperation = function(ctx) {
 };
 
-// Exit a parse tree produced by LogicParser#binary.
-LogicListener.prototype.exitBinary = function(ctx) {
-};
-
-
-// Enter a parse tree produced by LogicParser#unary_formula.
-LogicListener.prototype.enterUnary_formula = function(ctx) {
-};
-
-// Exit a parse tree produced by LogicParser#unary_formula.
-LogicListener.prototype.exitUnary_formula = function(ctx) {
+// Exit a parse tree produced by LogicParser#binaryOperation.
+LogicListener.prototype.exitBinaryOperation = function(ctx) {
 };
 
 
-// Enter a parse tree produced by LogicParser#binary_formula.
-LogicListener.prototype.enterBinary_formula = function(ctx) {
+// Enter a parse tree produced by LogicParser#unaryFormula.
+LogicListener.prototype.enterUnaryFormula = function(ctx) {
 };
 
-// Exit a parse tree produced by LogicParser#binary_formula.
-LogicListener.prototype.exitBinary_formula = function(ctx) {
+// Exit a parse tree produced by LogicParser#unaryFormula.
+LogicListener.prototype.exitUnaryFormula = function(ctx) {
+};
+
+
+// Enter a parse tree produced by LogicParser#binaryFormula.
+LogicListener.prototype.enterBinaryFormula = function(ctx) {
+};
+
+// Exit a parse tree produced by LogicParser#binaryFormula.
+LogicListener.prototype.exitBinaryFormula = function(ctx) {
 };
 
 

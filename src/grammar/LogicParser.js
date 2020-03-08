@@ -34,14 +34,14 @@ var decisionsToDFA = atn.decisionToState.map( function(ds, index) { return new a
 
 var sharedContextCache = new antlr4.PredictionContextCache();
 
-var literalNames = [ null, "'[10]'", "'[A-Z]'", "'!'", "'&'", "'|'", "'->'", 
-                     "'~'", "'('", "')'" ];
+var literalNames = [ null, null, null, "'!'", "'&'", "'|'", "'->'", "'~'", 
+                     "'('", "')'" ];
 
 var symbolicNames = [ null, "CONST", "ATOM", "NEGATION", "CONJUNCTION", 
                       "DISJUNCTION", "IMPLICATION", "EQUIVALENT", "OBRACKET", 
                       "CBRACKET", "WS" ];
 
-var ruleNames =  [ "statement", "binary", "unary_formula", "binary_formula", 
+var ruleNames =  [ "statement", "binaryOperation", "unaryFormula", "binaryFormula", 
                    "formula" ];
 
 function LogicParser (input) {
@@ -75,9 +75,9 @@ LogicParser.CBRACKET = 9;
 LogicParser.WS = 10;
 
 LogicParser.RULE_statement = 0;
-LogicParser.RULE_binary = 1;
-LogicParser.RULE_unary_formula = 2;
-LogicParser.RULE_binary_formula = 3;
+LogicParser.RULE_binaryOperation = 1;
+LogicParser.RULE_unaryFormula = 2;
+LogicParser.RULE_binaryFormula = 3;
 LogicParser.RULE_formula = 4;
 
 function StatementContext(parser, parent, invokingState) {
@@ -145,7 +145,7 @@ LogicParser.prototype.statement = function() {
     return localctx;
 };
 
-function BinaryContext(parser, parent, invokingState) {
+function BinaryOperationContext(parser, parent, invokingState) {
 	if(parent===undefined) {
 	    parent = null;
 	}
@@ -154,50 +154,50 @@ function BinaryContext(parser, parent, invokingState) {
 	}
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = LogicParser.RULE_binary;
+    this.ruleIndex = LogicParser.RULE_binaryOperation;
     return this;
 }
 
-BinaryContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-BinaryContext.prototype.constructor = BinaryContext;
+BinaryOperationContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+BinaryOperationContext.prototype.constructor = BinaryOperationContext;
 
-BinaryContext.prototype.CONJUNCTION = function() {
+BinaryOperationContext.prototype.CONJUNCTION = function() {
     return this.getToken(LogicParser.CONJUNCTION, 0);
 };
 
-BinaryContext.prototype.DISJUNCTION = function() {
+BinaryOperationContext.prototype.DISJUNCTION = function() {
     return this.getToken(LogicParser.DISJUNCTION, 0);
 };
 
-BinaryContext.prototype.IMPLICATION = function() {
+BinaryOperationContext.prototype.IMPLICATION = function() {
     return this.getToken(LogicParser.IMPLICATION, 0);
 };
 
-BinaryContext.prototype.EQUIVALENT = function() {
+BinaryOperationContext.prototype.EQUIVALENT = function() {
     return this.getToken(LogicParser.EQUIVALENT, 0);
 };
 
-BinaryContext.prototype.enterRule = function(listener) {
+BinaryOperationContext.prototype.enterRule = function(listener) {
     if(listener instanceof LogicListener ) {
-        listener.enterBinary(this);
+        listener.enterBinaryOperation(this);
 	}
 };
 
-BinaryContext.prototype.exitRule = function(listener) {
+BinaryOperationContext.prototype.exitRule = function(listener) {
     if(listener instanceof LogicListener ) {
-        listener.exitBinary(this);
+        listener.exitBinaryOperation(this);
 	}
 };
 
 
 
 
-LogicParser.BinaryContext = BinaryContext;
+LogicParser.BinaryOperationContext = BinaryOperationContext;
 
-LogicParser.prototype.binary = function() {
+LogicParser.prototype.binaryOperation = function() {
 
-    var localctx = new BinaryContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 2, LogicParser.RULE_binary);
+    var localctx = new BinaryOperationContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 2, LogicParser.RULE_binaryOperation);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
@@ -224,7 +224,7 @@ LogicParser.prototype.binary = function() {
     return localctx;
 };
 
-function Unary_formulaContext(parser, parent, invokingState) {
+function UnaryFormulaContext(parser, parent, invokingState) {
 	if(parent===undefined) {
 	    parent = null;
 	}
@@ -233,50 +233,50 @@ function Unary_formulaContext(parser, parent, invokingState) {
 	}
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = LogicParser.RULE_unary_formula;
+    this.ruleIndex = LogicParser.RULE_unaryFormula;
     return this;
 }
 
-Unary_formulaContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-Unary_formulaContext.prototype.constructor = Unary_formulaContext;
+UnaryFormulaContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+UnaryFormulaContext.prototype.constructor = UnaryFormulaContext;
 
-Unary_formulaContext.prototype.OBRACKET = function() {
+UnaryFormulaContext.prototype.OBRACKET = function() {
     return this.getToken(LogicParser.OBRACKET, 0);
 };
 
-Unary_formulaContext.prototype.NEGATION = function() {
+UnaryFormulaContext.prototype.NEGATION = function() {
     return this.getToken(LogicParser.NEGATION, 0);
 };
 
-Unary_formulaContext.prototype.formula = function() {
+UnaryFormulaContext.prototype.formula = function() {
     return this.getTypedRuleContext(FormulaContext,0);
 };
 
-Unary_formulaContext.prototype.CBRACKET = function() {
+UnaryFormulaContext.prototype.CBRACKET = function() {
     return this.getToken(LogicParser.CBRACKET, 0);
 };
 
-Unary_formulaContext.prototype.enterRule = function(listener) {
+UnaryFormulaContext.prototype.enterRule = function(listener) {
     if(listener instanceof LogicListener ) {
-        listener.enterUnary_formula(this);
+        listener.enterUnaryFormula(this);
 	}
 };
 
-Unary_formulaContext.prototype.exitRule = function(listener) {
+UnaryFormulaContext.prototype.exitRule = function(listener) {
     if(listener instanceof LogicListener ) {
-        listener.exitUnary_formula(this);
+        listener.exitUnaryFormula(this);
 	}
 };
 
 
 
 
-LogicParser.Unary_formulaContext = Unary_formulaContext;
+LogicParser.UnaryFormulaContext = UnaryFormulaContext;
 
-LogicParser.prototype.unary_formula = function() {
+LogicParser.prototype.unaryFormula = function() {
 
-    var localctx = new Unary_formulaContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 4, LogicParser.RULE_unary_formula);
+    var localctx = new UnaryFormulaContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 4, LogicParser.RULE_unaryFormula);
     try {
         this.enterOuterAlt(localctx, 1);
         this.state = 15;
@@ -301,7 +301,7 @@ LogicParser.prototype.unary_formula = function() {
     return localctx;
 };
 
-function Binary_formulaContext(parser, parent, invokingState) {
+function BinaryFormulaContext(parser, parent, invokingState) {
 	if(parent===undefined) {
 	    parent = null;
 	}
@@ -310,18 +310,18 @@ function Binary_formulaContext(parser, parent, invokingState) {
 	}
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = LogicParser.RULE_binary_formula;
+    this.ruleIndex = LogicParser.RULE_binaryFormula;
     return this;
 }
 
-Binary_formulaContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-Binary_formulaContext.prototype.constructor = Binary_formulaContext;
+BinaryFormulaContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+BinaryFormulaContext.prototype.constructor = BinaryFormulaContext;
 
-Binary_formulaContext.prototype.OBRACKET = function() {
+BinaryFormulaContext.prototype.OBRACKET = function() {
     return this.getToken(LogicParser.OBRACKET, 0);
 };
 
-Binary_formulaContext.prototype.formula = function(i) {
+BinaryFormulaContext.prototype.formula = function(i) {
     if(i===undefined) {
         i = null;
     }
@@ -332,35 +332,35 @@ Binary_formulaContext.prototype.formula = function(i) {
     }
 };
 
-Binary_formulaContext.prototype.binary = function() {
-    return this.getTypedRuleContext(BinaryContext,0);
+BinaryFormulaContext.prototype.binaryOperation = function() {
+    return this.getTypedRuleContext(BinaryOperationContext,0);
 };
 
-Binary_formulaContext.prototype.CBRACKET = function() {
+BinaryFormulaContext.prototype.CBRACKET = function() {
     return this.getToken(LogicParser.CBRACKET, 0);
 };
 
-Binary_formulaContext.prototype.enterRule = function(listener) {
+BinaryFormulaContext.prototype.enterRule = function(listener) {
     if(listener instanceof LogicListener ) {
-        listener.enterBinary_formula(this);
+        listener.enterBinaryFormula(this);
 	}
 };
 
-Binary_formulaContext.prototype.exitRule = function(listener) {
+BinaryFormulaContext.prototype.exitRule = function(listener) {
     if(listener instanceof LogicListener ) {
-        listener.exitBinary_formula(this);
+        listener.exitBinaryFormula(this);
 	}
 };
 
 
 
 
-LogicParser.Binary_formulaContext = Binary_formulaContext;
+LogicParser.BinaryFormulaContext = BinaryFormulaContext;
 
-LogicParser.prototype.binary_formula = function() {
+LogicParser.prototype.binaryFormula = function() {
 
-    var localctx = new Binary_formulaContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 6, LogicParser.RULE_binary_formula);
+    var localctx = new BinaryFormulaContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 6, LogicParser.RULE_binaryFormula);
     try {
         this.enterOuterAlt(localctx, 1);
         this.state = 20;
@@ -368,7 +368,7 @@ LogicParser.prototype.binary_formula = function() {
         this.state = 21;
         this.formula();
         this.state = 22;
-        this.binary();
+        this.binaryOperation();
         this.state = 23;
         this.formula();
         this.state = 24;
@@ -411,12 +411,12 @@ FormulaContext.prototype.ATOM = function() {
     return this.getToken(LogicParser.ATOM, 0);
 };
 
-FormulaContext.prototype.unary_formula = function() {
-    return this.getTypedRuleContext(Unary_formulaContext,0);
+FormulaContext.prototype.unaryFormula = function() {
+    return this.getTypedRuleContext(UnaryFormulaContext,0);
 };
 
-FormulaContext.prototype.binary_formula = function() {
-    return this.getTypedRuleContext(Binary_formulaContext,0);
+FormulaContext.prototype.binaryFormula = function() {
+    return this.getTypedRuleContext(BinaryFormulaContext,0);
 };
 
 FormulaContext.prototype.enterRule = function(listener) {
@@ -460,13 +460,13 @@ LogicParser.prototype.formula = function() {
         case 3:
             this.enterOuterAlt(localctx, 3);
             this.state = 28;
-            this.unary_formula();
+            this.unaryFormula();
             break;
 
         case 4:
             this.enterOuterAlt(localctx, 4);
             this.state = 29;
-            this.binary_formula();
+            this.binaryFormula();
             break;
 
         }

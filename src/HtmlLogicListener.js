@@ -14,13 +14,8 @@ HtmlLogicListener.prototype = Object.create(LogicListener.prototype);
 HtmlLogicListener.prototype.constructor = HtmlLogicListener;
 
 // override default listener behavior
-HtmlLogicListener.prototype.enterNode = function(ctx) {
-  this.result.output += "<strong>";
-};
-
-HtmlLogicListener.prototype.exitNode = function(ctx) {
-  this.result.output += ctx.ID().getText();
-  this.result.output += "</strong>";
+HtmlLogicListener.prototype.enterFormula = function(ctx) {
+  debugger
 };
 
 exports.HtmlLogicListener = HtmlLogicListener;

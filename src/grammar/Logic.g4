@@ -2,14 +2,14 @@ grammar Logic;
 
 statement: formula EOF;
 
-binary: CONJUNCTION | DISJUNCTION | IMPLICATION | EQUIVALENT;
+binaryOperation: CONJUNCTION | DISJUNCTION | IMPLICATION | EQUIVALENT;
 
-unary_formula: OBRACKET NEGATION formula CBRACKET;
-binary_formula:  OBRACKET formula binary formula CBRACKET;
-formula: CONST | ATOM | unary_formula | binary_formula;
+unaryFormula: OBRACKET NEGATION formula CBRACKET;
+binaryFormula:  OBRACKET formula binaryOperation formula CBRACKET;
+formula: CONST | ATOM | unaryFormula | binaryFormula;
 
-CONST : '[10]' ;
-ATOM: '[A-Z]' ;
+CONST : [10] ;
+ATOM : [A-Z] ;
 
 NEGATION : '!' ;
 
