@@ -2,7 +2,7 @@ const express = require('express');
 const pug = require('pug');
 const url = require('url');
 
-const runScript = require('./logicRunner')
+const convert = require('./logicRunner')
 
 const app = express();
 const port = 3000;
@@ -14,7 +14,7 @@ app.get('/request', (req, res) => {
 });
 
 app.post('/request', (req, res) => {
-  const result = runScript(req.body.code)
+  const result = convert(req.body.code)
   res.redirect(url.format({
     pathname: '/result',
     query: {
