@@ -6,7 +6,7 @@ const convert = require('./pcnfConverter').convert;
 var Visitor = require('./Visitor').Visitor;
 
 module.exports = (input) => {
-  var input = "(A | B)";
+  var input = "(A | (B & (C | D)))";
   var chars = new antlr4.InputStream(input);
   var lexer = new LogicLexer.LogicLexer(chars);
   var tokens = new antlr4.CommonTokenStream(lexer);
@@ -16,7 +16,6 @@ module.exports = (input) => {
   var tree = parser.statement();
 
   var statement = visitor.visitStatement(tree);
-
   pcnf = convert(statement);
 
   debugger
