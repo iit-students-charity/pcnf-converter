@@ -1,7 +1,9 @@
-// Generated from src/grammar/Logic.g4 by ANTLR 4.7.1
+// Generated from Logic.g4 by ANTLR 4.7.1
 // jshint ignore: start
 var antlr4 = require('antlr4/index');
 var LogicListener = require('./LogicListener').LogicListener;
+var LogicVisitor = require('./LogicVisitor').LogicVisitor;
+
 var grammarFileName = "Logic.g4";
 
 var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
@@ -116,6 +118,14 @@ StatementContext.prototype.exitRule = function(listener) {
 	}
 };
 
+StatementContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof LogicVisitor ) {
+        return visitor.visitStatement(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -187,6 +197,14 @@ BinaryOperationContext.prototype.exitRule = function(listener) {
     if(listener instanceof LogicListener ) {
         listener.exitBinaryOperation(this);
 	}
+};
+
+BinaryOperationContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof LogicVisitor ) {
+        return visitor.visitBinaryOperation(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
 };
 
 
@@ -266,6 +284,14 @@ UnaryFormulaContext.prototype.exitRule = function(listener) {
     if(listener instanceof LogicListener ) {
         listener.exitUnaryFormula(this);
 	}
+};
+
+UnaryFormulaContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof LogicVisitor ) {
+        return visitor.visitUnaryFormula(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
 };
 
 
@@ -352,6 +378,14 @@ BinaryFormulaContext.prototype.exitRule = function(listener) {
 	}
 };
 
+BinaryFormulaContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof LogicVisitor ) {
+        return visitor.visitBinaryFormula(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -429,6 +463,14 @@ FormulaContext.prototype.exitRule = function(listener) {
     if(listener instanceof LogicListener ) {
         listener.exitFormula(this);
 	}
+};
+
+FormulaContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof LogicVisitor ) {
+        return visitor.visitFormula(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
 };
 
 
