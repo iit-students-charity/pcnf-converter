@@ -7,6 +7,14 @@ const convert = require('./logicRunner')
 const app = express();
 const port = 3000;
 
+function serialize(table) {
+  result = '';
+  table.forEach((value, key) => {
+    result += key + ': ' + value.toString() + '<br>';
+  })
+  return result;
+}
+
 app.use(express.urlencoded())
 
 app.get('/request', (req, res) => {
@@ -18,14 +26,16 @@ app.post('/request', (req, res) => {
   res.redirect(url.format({
     pathname: '/result',
     query: {
-      'result': result
+      'result': result.pcnf,
+      'table': serialize(result.table)
     }
   }));
 });
 
 app.get('/result', (req, res) => {
   res.send(pug.renderFile('src/views/result.pug', {
-    result: req.query.result
+    result: req.query.result,
+    table: req.query.table
   }));
 });
 

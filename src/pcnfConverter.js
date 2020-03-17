@@ -1,6 +1,7 @@
 function convert(statement) {
   let map = getInitialMap(statement.atoms);
-  return buildPcnf(apply(statement, map));
+  let table = apply(statement, map);
+  return {pcnf: buildPcnf(table), table: table };
 };
 
 function getInitialMap(atoms) {
