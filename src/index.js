@@ -28,11 +28,13 @@ app.get('/', (req, res) => {
 })
 
 app.get('/formula-test', (req, res) => {
-  res.send(pug.renderFile('src/views/formulaTest.pug', {}));
+  //formula = generateFormula(0.5)
+  formula = "1"
+  res.send(pug.renderFile('src/views/formulaTest.pug', {formula: formula}));
 })
 
 app.get('/pcnf-test', (req, res) => {
-  res.send(pug.renderFile('src/views/PcnfTest.pug', {}));
+  res.send(pug.renderFile('src/views/pcnfTest.pug', {}));
 })
 
 app.get('/convert', (req, res) => {
@@ -40,13 +42,7 @@ app.get('/convert', (req, res) => {
 });
 
 app.post('/convert', (req, res) => {
-  let result;
-  try {
-    result = convert(req.body.formula)
-  }
-  catch(error) {
-    result = { pcnf: "Invalid formula", table: {}}
-  }
+  result = convert(req.body.formula)
   res.json({
     result: result.pcnf,
     table: mapToObject(result.table)
