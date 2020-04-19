@@ -15,21 +15,36 @@ function serialize(table) {
   return result;
 }
 
+function mapToObject(map) {
+  return Array.from(map).reduce((obj, [key, value]) => (
+    Object.assign(obj, { [key]: value })
+  ), {});
+}
+
 app.use(express.urlencoded())
 
-app.get('/request', (req, res) => {
-  res.send(pug.renderFile('src/views/form.pug', {}));
+app.get('/', (req, res) => {
+  res.send(pug.renderFile('src/views/navigation.pug', {}));
+})
+
+app.get('/formula-test', (req, res) => {
+  res.send(pug.renderFile('src/views/formulaTest.pug', {}));
+})
+
+app.get('/pcnf-test', (req, res) => {
+  res.send(pug.renderFile('src/views/PcnfTest.pug', {}));
+})
+
+app.get('/convert', (req, res) => {
+  res.send(pug.renderFile('src/views/convert.pug', {}));
 });
 
-app.post('/request', (req, res) => {
-  const result = convert(req.body.code)
-  res.redirect(url.format({
-    pathname: '/result',
-    query: {
-      'result': result.pcnf,
-      'table': serialize(result.table)
-    }
-  }));
+app.post('/convert', (req, res) => {
+  const result = convert(req.body.formula)
+  res.json({
+    result: result.pcnf,
+    table: mapToObject(result.table)
+  })
 });
 
 app.get('/result', (req, res) => {
