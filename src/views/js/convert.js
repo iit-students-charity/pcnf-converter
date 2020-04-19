@@ -1,6 +1,5 @@
 $(document).ready(() => {
-  $(document).on('click', '#submit', (e) => {
-    e.preventDefault()
+  $(document).on('click', '#convert', () => {
     $.ajax({
       url: '/convert',
       type: 'POST',
@@ -8,6 +7,9 @@ $(document).ready(() => {
       success: (data) => {
         console.log(data.table)
         $("#result").text(data.result)
+      },
+      error: (data) => {
+        $("#result").text('An error occured')
       }
     })
   })

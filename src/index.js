@@ -40,18 +40,17 @@ app.get('/convert', (req, res) => {
 });
 
 app.post('/convert', (req, res) => {
-  const result = convert(req.body.formula)
+  let result;
+  try {
+    result = convert(req.body.formula)
+  }
+  catch(error) {
+    result = { pcnf: "Invalid formula", table: {}}
+  }
   res.json({
     result: result.pcnf,
     table: mapToObject(result.table)
   })
-});
-
-app.get('/result', (req, res) => {
-  res.send(pug.renderFile('src/views/result.pug', {
-    result: req.query.result,
-    table: req.query.table
-  }));
 });
 
 app.listen(port, () => console.log(`Server listening on port ${port}`));
