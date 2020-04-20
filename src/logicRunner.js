@@ -23,7 +23,7 @@ module.exports = (input) => {
     var visitor = new Visitor();
     var tree = parser.statement();
 
-    if (tree.getText() !== input + '<EOF>') {
+    if (tree.getText() !== input.replace(/\s/g, '') + '<EOF>') {
       throw "Not a logic formula";
     }
 

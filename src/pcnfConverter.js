@@ -86,63 +86,23 @@ function implication(left, right) {
   }
 }
 
-iter = 0;
-outer_iter = 0;
-inner = 0;
-outer = 0;
 function buildPcnf(table) {
   let pcnf = '';
   let results = table.get('result');
-  zeros = results.filter((r) => r === 0).length
   for (let i = 0; i < results.length; i++) {
     if (results[i] === 0) {
-      outer++;
-      outer_iter++;
-      if (outer === 1 && outer_iter !== zeros) {
-        pcnf += '((';
-      } else {
-        pcnf += '(';
-      }
-      iter = 0;
-      keys = table.size - 1;
+      pcnf += '(';
       table.forEach((values, key) => {
-        iter++;
         if (key !== 'result') {
-          inner++;
-          if (iter === keys) {
-            if (values[i] === 1) {
-              pcnf += `(!${key}) & `;
-              inner = 0;
-            } else {
-              pcnf += `${key} & `;
-              inner = 0;
-            }
+          if (values[i] === 1) {
+            pcnf += `!${key} & `;
           } else {
-            if (values[i] === 1) {
-              if (inner === 1) {
-                pcnf += `((!${key}) & `;
-              } else {
-                pcnf += `(!${key})) & `;
-                inner = 0;
-              }
-            } else {
-              if (inner === 1) {
-                pcnf += `(${key} & `;
-              } else {
-                pcnf += `${key}) & `;
-                inner = 0;
-              }
-            }
+            pcnf += `${key} & `;
           }
         }
       });
       pcnf = pcnf.slice(0, -3)
-      if (outer === 2 && outer_iter !== zeros) {
-        pcnf += ')) | ';
-        outer = 0;
-      } else {
-        pcnf += ') | ';
-      }
+      pcnf += ') | ';
     }
   }
   pcnf = pcnf.slice(0, -3)

@@ -5,7 +5,7 @@ $(document).ready(() => {
       type: 'POST',
       data: { formula: $('#formula').text() },
       success: (data) => {
-        if (data.result === $('#pcnf').val()) {
+        if (data.result === $('#pcnf').val().replace(/\s/g, '')) {
           $("#result").text('You are right :)')
         } else {
           $("#result").html(`You are wrong :( <br> It should be ${data.result}`)
