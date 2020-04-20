@@ -11,10 +11,10 @@ $(document).ready(() => {
     $.ajax({
       url: '/convert',
       type: 'POST',
-      data: { formula: $("#formula").val() },
+      data: { formula: $("#formula").text() },
       success: (data) => {
         isValid = true
-        if (data.table === {} || data.error) {
+        if (data.error) {
           isValid = false
         }
 

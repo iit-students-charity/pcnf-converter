@@ -3,6 +3,7 @@ const pug = require('pug');
 const url = require('url');
 
 const convert = require('./logicRunner')
+const generateFormula = require('./formulaGenerator')
 
 const app = express();
 const port = 3000;
@@ -28,8 +29,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/formula-test', (req, res) => {
-  //formula = generateFormula(0.5)
-  formula = "1"
+  formula = generateFormula(0.5)
   res.send(pug.renderFile('src/views/formulaTest.pug', {formula: formula}));
 })
 
@@ -45,7 +45,8 @@ app.post('/convert', (req, res) => {
   result = convert(req.body.formula)
   res.json({
     result: result.pcnf,
-    table: mapToObject(result.table)
+    table: mapToObject(result.table),
+    error: result.error
   })
 });
 
