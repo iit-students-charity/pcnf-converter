@@ -13,22 +13,10 @@ $(document).ready(() => {
       type: 'POST',
       data: { formula: $("#formula").text() },
       success: (data) => {
-        isValid = true
-        if (data.error) {
-          isValid = false
-        }
-
-        if (shouldBeValid === isValid) {
+        if (shouldBeValid !== data.error) {
           $("#result").text('You are right :)')
         } else {
           $("#result").text('You are wrong :(')
-        }
-      },
-      error: (data) => {
-        if (shouldBeValid) {
-          $("#result").text('You are wrong :(')
-        } else {
-          $("#result").text('You are right :)')
         }
       }
     })

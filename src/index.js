@@ -34,7 +34,8 @@ app.get('/formula-test', (req, res) => {
 })
 
 app.get('/pcnf-test', (req, res) => {
-  res.send(pug.renderFile('src/views/pcnfTest.pug', {}));
+  formula = generateFormula(0)
+  res.send(pug.renderFile('src/views/pcnfTest.pug', {formula: formula}));
 })
 
 app.get('/convert', (req, res) => {
