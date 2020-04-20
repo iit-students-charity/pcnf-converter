@@ -3,17 +3,7 @@ const antlr4 = require('antlr4/index');
 const LogicLexer = require('./grammar/LogicLexer');
 const LogicParser = require('./grammar/LogicParser');
 const convert = require('./pcnfConverter').convert;
-var Visitor = require('./Visitor').Visitor;
-
-class ErrorListener {
-  constructor() {
-    return this;
-  }
-
-  syntaxError() {
-    throw "Not a logic formula";
-  }
-};
+const Visitor = require('./Visitor').Visitor;
 
 module.exports = (input) => {
   try{
@@ -21,13 +11,24 @@ module.exports = (input) => {
     var lexer = new LogicLexer.LogicLexer(chars);
     var tokens = new antlr4.CommonTokenStream(lexer);
     var parser = new LogicParser.LogicParser(tokens);
+
     parser.removeErrorListeners();
-    parser.addErrorListener(new ErrorListener());
+    parser.addErrorListener({
+      syntaxError: (recognizer, offendingSymbol, line, column, msg, err) => {
+        throw "Not a logic formula";
+      }
+    });
     parser.buildParseTrees = true;
+
     var visitor = new Visitor();
     var tree = parser.statement();
 
+    if (tree.getText() !== input + '<EOF>') {
+      throw "Not a logic formula";
+    }
+
     var statement = visitor.visitStatement(tree);
+
     return convert(statement);
   } catch {
     return { pcnf: "Invalid formula", table: {}, error: true }
