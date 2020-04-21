@@ -98,7 +98,7 @@ function buildPcnf(table) {
   for (let i = 0; i < table.get('result').length; i++) {
     if (table.get('result')[i] === 1) continue;
 
-    if (!firstIteration) pcnf += "|";
+    if (!firstIteration) pcnf += "&";
     pcnf += buildBlock(table, i);
     if (!firstIteration) pcnf += ")";
     firstIteration = false;
@@ -125,7 +125,7 @@ function buildBlock(table, index) {
 
   let firstIteration = true
   for (let [atom, value] of entries) {
-    if (!firstIteration) result += '&';
+    if (!firstIteration) result += '|';
     if (value === 1) {
       result += `(!${atom})`;
     } else {
