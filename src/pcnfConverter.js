@@ -88,26 +88,55 @@ function implication(left, right) {
 
 function buildPcnf(table) {
   let pcnf = '';
-  let results = table.get('result');
-  for (let i = 0; i < results.length; i++) {
-    if (results[i] === 0) {
-      pcnf += '(';
-      table.forEach((values, key) => {
-        if (key !== 'result') {
-          if (values[i] === 1) {
-            pcnf += `!${key} & `;
-          } else {
-            pcnf += `${key} & `;
-          }
-        }
-      });
-      pcnf = pcnf.slice(0, -3)
-      pcnf += ') | ';
-    }
+  let firstIteration = true
+
+  let falseCount = table.get('result').filter((v) => v === 0).length;
+  for (let i = 0; i < falseCount - 1; i++) {
+    pcnf += "(";
   }
-  pcnf = pcnf.slice(0, -3)
+
+  for (let i = 0; i < table.get('result').length; i++) {
+    if (table.get('result')[i] === 1) continue;
+
+    if (!firstIteration) pcnf += "|";
+    pcnf += buildBlock(table, i);
+    if (!firstIteration) pcnf += ")";
+    firstIteration = false;
+  }
 
   return pcnf;
+}
+
+function buildBlock(table, index) {
+  let block = {};
+  table.forEach((array, atom) => {
+    if (atom === 'result') return;
+    atomBlock = {};
+    atomBlock[atom] = array[index];
+    Object.assign(block, atomBlock);
+  })
+
+  let result = '';
+  let entries = Object.entries(block);
+
+  for (let i = 0; i < entries.length - 1; i++) {
+    result += "(";
+  }
+
+  let firstIteration = true
+  for (let [atom, value] of entries) {
+    if (!firstIteration) result += '&';
+    if (value === 1) {
+      result += `(!${atom})`;
+    } else {
+      result += atom;
+    }
+    if (!firstIteration) result += ')';
+
+    firstIteration = false;
+  }
+
+  return result;
 }
 
 exports.convert = convert;
